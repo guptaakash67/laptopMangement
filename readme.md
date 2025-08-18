@@ -150,9 +150,3 @@ Contributions are welcome! Please follow these steps:
 ## License
 This project is licensed under the MIT License. See the `LICENSE` file for details.
 
-## Contact
-If you have any questions, feel free to reach out:
-- **Email:** ps3threee@gmail.com
-- **LinkedIn:** [Pankaj Sharma](https://www.linkedin.com/in/pankaj-sharma-925b2b250/)
-
----
