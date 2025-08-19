@@ -150,13 +150,30 @@ class EmployeeController {
   static async deleteEmployee(req, res) {
     const { id } = req.params;
     try {
-      const employee = await Employee.findByIdAndDelete(id);
+      // First find the employee to get their laptop info
+      const employee = await Employee.findById(id);
       if (!employee) {
         return res.status(404).json({
           success: false,
           message: "Employee not found",
         });
       }
+
+      // If employee has an assigned laptop, update its status to available
+      if (employee.laptopAssigned) {
+        try {
+          await mongoose.model('Laptop').findByIdAndUpdate(
+            employee.laptopAssigned,
+            { status: 'available' }
+          );
+        } catch (error) {
+          console.error('Error updating laptop status:', error);
+        }
+      }
+
+      // Now delete the employee
+      await Employee.findByIdAndDelete(id);
+
       res.status(200).json({
         success: true,
         message: "Employee deleted successfully",

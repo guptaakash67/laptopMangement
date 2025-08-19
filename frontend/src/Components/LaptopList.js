@@ -12,16 +12,8 @@ const LaptopList = () => {
     purchaseDate: "",
   });
 
+  // Fetch laptops when component mounts
   useEffect(() => {
-    const fetchLaptops = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/api/laptops");
-        setLaptops(response.data);
-      } catch (error) {
-        setError(`Error fetching laptops: ${error.message}`);
-      }
-    };
-
     fetchLaptops();
   }, []);
 
@@ -38,25 +30,64 @@ const LaptopList = () => {
     }
   };
 
+  const fetchLaptops = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/laptops");
+      setLaptops(response.data);
+    } catch (error) {
+      setError(`Error fetching laptops: ${error.message}`);
+    }
+  };
+
   const handleCreateLaptop = async (e) => {
     e.preventDefault();
+    setError(null); // Clear any previous errors
+    
     try {
+      // Validate required fields
+      if (!newLaptop.brand || !newLaptop.model || !newLaptop.serialNumber || !newLaptop.status || !newLaptop.purchaseDate) {
+        setError("All fields are required: Brand, Model, Serial Number, Status, and Purchase Date");
+        return;
+      }
+
+      // Validate serial number format
+      if (!/^[A-Za-z0-9]+$/.test(newLaptop.serialNumber)) {
+        setError("Serial number must contain only letters and numbers (no spaces or special characters)");
+        return;
+      }
+
+      // Format the data before sending
+      const laptopData = {
+        ...newLaptop,
+        brand: newLaptop.brand.trim(),
+        model: newLaptop.model.trim(),
+        serialNumber: newLaptop.serialNumber.trim(),
+        status: newLaptop.status || 'available',
+        purchaseDate: newLaptop.purchaseDate || new Date().toISOString().split('T')[0]
+      };
+
       const response = await axios.post(
         "http://localhost:5000/api/laptops",
-        newLaptop
+        laptopData
       );
-      setLaptops([...laptops, response.data]);
-      setNewLaptop({
-        brand: "",
-        model: "",
-        serialNumber: "",
-        status: "",
-        purchaseDate: "",
-      });
-      // console.log(response.data);
+
+      if (response.data) {
+        // Reset the form
+        setNewLaptop({
+          brand: "",
+          model: "",
+          serialNumber: "",
+          status: "available",
+          purchaseDate: new Date().toISOString().split('T')[0]
+        });
+        
+        // Fetch the updated list
+        await fetchLaptops();
+        setError(null);
+      }
     } catch (error) {
-      setError(`Error creating laptop: ${error.message}`);
-      console.log(error.message);
+      setError(error.response?.data?.message || "Error creating laptop");
+      console.error("Laptop creation error:", error);
     }
   };
 
@@ -104,6 +135,7 @@ const LaptopList = () => {
         <select
           className="form-select mb-2"
           value={newLaptop.status}
+          required
           onChange={(e) =>
             setNewLaptop({ ...newLaptop, status: e.target.value })
           }
@@ -113,14 +145,17 @@ const LaptopList = () => {
           <option value="assigned">Assigned</option>
           <option value="under maintenance">Under Maintenance</option>
         </select>
+        {/* <small className="text-muted d-block mb-3">Please select the laptop status</small> */}
 
         <input
           type="date"
-          className="form-control mb-4"
+          className="form-control mb-2"
           value={newLaptop.purchaseDate}
+          required
           onChange={(e) =>
             setNewLaptop({ ...newLaptop, purchaseDate: e.target.value })
           }
+          placeholder="Select Purchase Date"
         />
         <button type="submit" className="btn btn-primary">
           Create Laptop

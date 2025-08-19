@@ -16,49 +16,57 @@ const EmployeeList = () => {
     laptopAssigned: "",
   });
 
+  // Function to fetch employees
+  const fetchEmployees = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/employees");
+      const employeeData = response.data.data || response.data;
+      setEmployees(employeeData);
+    } catch (error) {
+      setError(`Error fetching employees: ${error.message}`);
+      console.error("Employee fetch error:", error);
+    }
+  };
+
+  // Function to fetch available laptops
+  const fetchLaptops = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/laptops/available");
+      const laptopData = response.data.data || response.data;
+      setLaptops(laptopData);
+    } catch (error) {
+      setError(`Error fetching laptops: ${error.message}`);
+      console.error("Laptop fetch error:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchEmployees = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/api/employees");
-        // Handle different possible response structures
-        const employeeData = response.data.data || response.data;
-        setEmployees(employeeData);
-      } catch (error) {
-        setError(`Error fetching employees: ${error.message}`);
-        console.error("Employee fetch error:", error);
-      }
-    };
-
-    const fetchLaptops = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/api/laptops");
-        // Handle different possible response structures
-        const laptopData = response.data.data || response.data;
-
-        // Filter only available laptops
-        const availableLaptops = laptopData.filter(
-          (laptop) => laptop.status === "available"
-        );
-
-        setLaptops(availableLaptops);
-      } catch (error) {
-        setError(`Error fetching laptops: ${error.message}`);
-        console.error("Laptop fetch error:", error);
-      }
-    };
-
     fetchEmployees();
     fetchLaptops();
   }, []);
 
   const handleDelete = async (id) => {
     try {
+      // Get the employee before deletion to check for laptop
+      const employeeToDelete = employees.find(emp => emp._id === id);
+      
+      // Delete the employee
       const response = await axios.delete(
         `http://localhost:5000/api/employees/${id}`
       );
-      // Handle different possible success indicators
-      if (response.data.success || response.status === 200) {
-        setEmployees(employees.filter((employee) => employee._id !== id));
+
+      if (response.data.success) {
+        // Update employees list
+        setEmployees(prevEmployees => 
+          prevEmployees.filter(employee => employee._id !== id)
+        );
+
+        // If employee had a laptop assigned, refresh the laptops list
+        if (employeeToDelete?.laptopAssigned) {
+          fetchLaptops();
+        }
+
+        setError(null); // Clear any previous errors
       }
     } catch (error) {
       setError(`Error deleting employee: ${error.message}`);
@@ -69,22 +77,28 @@ const EmployeeList = () => {
   const handleCreateEmployee = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
+      // Create the employee
+      const employeeResponse = await axios.post(
         "http://localhost:5000/api/employees",
         newEmployee
       );
-      // Handle different possible success scenarios
-      if (response.data.success || response.status === 201) {
-        const newEmployeeData = response.data.data || response.data;
-        setEmployees([...employees, newEmployeeData]);
 
-        // Reset form and update available laptops if a laptop was assigned
+      if (employeeResponse.data) {
+        const newEmployeeData = employeeResponse.data;
+
+        // If a laptop is being assigned
         if (newEmployee.laptopAssigned) {
-          setLaptops(
-            laptops.filter(
-              (laptop) => laptop._id !== newEmployee.laptopAssigned
-            )
+          // Update laptop status to assigned
+          await axios.patch(
+            `http://localhost:5000/api/laptops/${newEmployee.laptopAssigned}/status`,
+            { status: 'assigned' }
           );
+          
+          // Refresh both employees and available laptops lists
+          await Promise.all([fetchEmployees(), fetchLaptops()]);
+        } else {
+          // Just update employees list if no laptop assigned
+          setEmployees(prevEmployees => [...prevEmployees, newEmployeeData]);
         }
 
         // Reset the form
@@ -98,6 +112,9 @@ const EmployeeList = () => {
           role: "",
           laptopAssigned: "",
         });
+        
+        // Clear any previous errors
+        setError(null);
       }
     } catch (error) {
       setError(`Error creating employee: ${error.message}`);
