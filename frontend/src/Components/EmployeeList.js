@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../utils/api";
 
 const EmployeeList = () => {
   const [employees, setEmployees] = useState([]);
@@ -19,7 +19,7 @@ const EmployeeList = () => {
   // Function to fetch employees
   const fetchEmployees = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/employees");
+      const response = await api.get("/employees");
       const employeeData = response.data.data || response.data;
       setEmployees(employeeData);
     } catch (error) {
@@ -31,7 +31,7 @@ const EmployeeList = () => {
   // Function to fetch available laptops
   const fetchLaptops = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/laptops/available");
+            const response = await api.get("/laptops/available");
       const laptopData = response.data.data || response.data;
       setLaptops(laptopData);
     } catch (error) {
@@ -51,8 +51,8 @@ const EmployeeList = () => {
       const employeeToDelete = employees.find(emp => emp._id === id);
       
       // Delete the employee
-      const response = await axios.delete(
-        `http://localhost:5000/api/employees/${id}`
+      const response = await api.delete(
+        `/employees/${id}`
       );
 
       if (response.data.success) {
@@ -78,8 +78,8 @@ const EmployeeList = () => {
     e.preventDefault();
     try {
       // Create the employee
-      const employeeResponse = await axios.post(
-        "http://localhost:5000/api/employees",
+      const employeeResponse = await api.post(
+        "/employees",
         newEmployee
       );
 
@@ -89,8 +89,8 @@ const EmployeeList = () => {
         // If a laptop is being assigned
         if (newEmployee.laptopAssigned) {
           // Update laptop status to assigned
-          await axios.patch(
-            `http://localhost:5000/api/laptops/${newEmployee.laptopAssigned}/status`,
+          await api.patch(
+            `/laptops/${newEmployee.laptopAssigned}/status`,
             { status: 'assigned' }
           );
           

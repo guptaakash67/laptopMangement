@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../utils/api";
 
 const LaptopList = () => {
   const [laptops, setLaptops] = useState([]);
@@ -19,8 +19,8 @@ const LaptopList = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:5000/api/laptops/${id}`
+      const response = await api.delete(
+        `/laptops/${id}`
       );
       if (response.status === 204) {
         setLaptops(laptops.filter((laptop) => laptop._id !== id));
@@ -32,7 +32,7 @@ const LaptopList = () => {
 
   const fetchLaptops = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/laptops");
+      const response = await api.get("/laptops");
       setLaptops(response.data);
     } catch (error) {
       setError(`Error fetching laptops: ${error.message}`);
@@ -66,8 +66,8 @@ const LaptopList = () => {
         purchaseDate: newLaptop.purchaseDate || new Date().toISOString().split('T')[0]
       };
 
-      const response = await axios.post(
-        "http://localhost:5000/api/laptops",
+      const response = await api.post(
+        "/laptops",
         laptopData
       );
 
