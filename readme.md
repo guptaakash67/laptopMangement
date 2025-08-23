@@ -109,7 +109,8 @@ laptop-mangement/
 
 ## Screenshots
 ### Login Page:
-![Login Screenshot](<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/ef95663a-59ce-43b1-834f-f6b94bd8a553" />
+![Login Screenshot](<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/746f18fb-36b9-4c78-90b7-6617b5665eac" />
+
 )
 
 ### Register Page:
