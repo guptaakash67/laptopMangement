@@ -109,29 +109,26 @@ laptop-mangement/
 
 ## Screenshots
 ### Login Page:
-![Login Screenshot](<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/746f18fb-36b9-4c78-90b7-6617b5665eac" />
+![Login Screenshot]<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/746f18fb-36b9-4c78-90b7-6617b5665eac" />
 
-)
 
 ### Register Page:
-![Register Screenshot](<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/f5c230c5-6973-484e-8ea6-72522aacb2fe" />
-)
+![Register Screenshot]<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/785f829f-8e6b-45ef-92d4-357d43cc7564" />
 
 ### Laptop Page:
-![Form Screenshot](<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/8e9a214b-41ba-473d-a96a-628722403882" />
-)
+![Form Screenshot]<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/d92ea281-cad9-4630-9c8a-42967e36f2f2" />
+
 
 ### Employee Page:
-![Form Screenshot](<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/3bb9a171-2fff-4be9-a865-e50301ca1186" />
-)
+![Form Screenshot]<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/c4b91a59-e56f-4ead-81c2-4f5803de01f8" />
+
 
 ### Laptop Assigning:
-![Form Screenshot](<img width="893" height="324" alt="image" src="https://github.com/user-attachments/assets/e1641496-d0de-4726-9536-45c4888997fb" />
-)
+![Form Screenshot]<img width="878" height="194" alt="image" src="https://github.com/user-attachments/assets/25d78000-219b-42b7-bf39-01e46bcae9c0" />
+
 
 ### Database :
-![Form Screenshot](<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/49a85d68-7ef3-4235-bed6-d26eed3d25ee" />
-)
+![Form Screenshot]<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/9229b934-1b27-4e74-853d-d81853a169f8" />
 
 ## Future Enhancements
 - **Authentication:** Implement user authentication and role-based access control.
