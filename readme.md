@@ -38,8 +38,8 @@ This project is a full-stack Asset Management System designed to manage and trac
 ### Steps
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/ps3coder/assets_management
-   cd asset-management
+   git clone https://github.com/guptaakash67/laptopMangement.git
+   cd laptopMangement
    ```
 
 2. **Install dependencies:**
@@ -50,7 +50,7 @@ This project is a full-stack Asset Management System designed to manage and trac
      ```
    - Frontend:
      ```bash
-     cd ../frontend
+     cd frontend
      npm install
      ```
 
@@ -69,7 +69,7 @@ This project is a full-stack Asset Management System designed to manage and trac
      ```
    - Start the frontend:
      ```bash
-     cd ../frontend
+     cd frontend
      npm start
      ```
    The frontend will run on `http://localhost:3000`, and the backend will run on `http://localhost:5000`.
@@ -87,7 +87,7 @@ This project is a full-stack Asset Management System designed to manage and trac
 
 ## Folder Structure
 ```
-asset-management-laptops/
+laptop-mangement/
 ├── api/
 │   ├── models/           # Mongoose models
 │   ├── routes/           # API routes
@@ -109,21 +109,28 @@ asset-management-laptops/
 
 ## Screenshots
 ### Login Page:
-![Login Screenshot](https://github.com/ps3coder/Project_images_url/blob/main/Screenshot%202024-12-13%20203022.png)
+![Login Screenshot](<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/ef95663a-59ce-43b1-834f-f6b94bd8a553" />
+)
+
+### Register Page:
+![Register Screenshot](<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/f5c230c5-6973-484e-8ea6-72522aacb2fe" />
+)
 
 ### Laptop Page:
-![Form Screenshot](https://github.com/ps3coder/Project_images_url/blob/main/Screenshot%202024-12-13%20203031.png)
-
+![Form Screenshot](<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/8e9a214b-41ba-473d-a96a-628722403882" />
+)
 
 ### Employee Page:
-![Form Screenshot](https://github.com/ps3coder/Project_images_url/blob/main/Screenshot%202024-12-13%20203045.png)
-
+![Form Screenshot](<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/3bb9a171-2fff-4be9-a865-e50301ca1186" />
+)
 
 ### Laptop Assigning:
-![Form Screenshot](https://github.com/ps3coder/Project_images_url/blob/main/Screenshot%202024-12-13%20203054.png)
+![Form Screenshot](<img width="893" height="324" alt="image" src="https://github.com/user-attachments/assets/e1641496-d0de-4726-9536-45c4888997fb" />
+)
 
 ### Database :
-![Form Screenshot](https://github.com/ps3coder/Project_images_url/blob/main/Screenshot%202024-12-13%20203202.png)
+![Form Screenshot](<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/49a85d68-7ef3-4235-bed6-d26eed3d25ee" />
+)
 
 ## Future Enhancements
 - **Authentication:** Implement user authentication and role-based access control.
